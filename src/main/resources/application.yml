@@ -18,12 +18,16 @@ spring:
             non_contextual_creation: true
         id:
           new_generator_mappings: true
+    defer-datasource-initialization: true
   devtools:
     restart:
       additional-exclude: logs/**
   docker:
     compose:
       lifecycle-management: start-only
+  sql:
+    init:
+      mode: always
 #logging:
 #    level:
 #        root: debug

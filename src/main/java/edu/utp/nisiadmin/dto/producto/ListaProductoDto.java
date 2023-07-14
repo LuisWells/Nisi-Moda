@@ -9,5 +9,5 @@ import java.io.Serializable;
  * DTO for {@link Producto}
  */
 public record ListaProductoDto(Long id, String nombre, EstadoProducto estado, String fotoUrl, String descripcion,
-                               Double precio) implements Serializable {
+                               Double precio, String categoria) implements Serializable {
 }

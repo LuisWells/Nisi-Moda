@@ -11,5 +11,5 @@ import java.time.OffsetDateTime;
  */
 public record DetalleProductoDto(Long id, String nombre, Integer cantidad, EstadoProducto estado, String fotoUrl,
                                  String descripcion, Double precio, OffsetDateTime dateCreated,
-                                 OffsetDateTime lastUpdated) implements Serializable {
+                                 OffsetDateTime lastUpdated, String categoria) implements Serializable {
 }

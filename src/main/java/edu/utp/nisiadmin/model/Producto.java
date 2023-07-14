@@ -47,6 +47,7 @@ public class Producto {
     private String fotoUrl;
 
     private String descripcion;
+    private String categoria;
 
     @ToString.Include
     private Double precio;

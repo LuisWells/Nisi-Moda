@@ -32,7 +32,7 @@ public class ProductoService {
     public Long crearProducto(RegistroProductoDto dto) {
         try {
             Producto producto = mapper.toEntity(dto);
-            producto.setEstado(EstadoProducto.EN_PROCESO);
+            producto.setEstado(EstadoProducto.NUEVO);
             Producto productoGuardado = repositorio.save(producto);
             return productoGuardado.getId();
         } catch (Exception e) {

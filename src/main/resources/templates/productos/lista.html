@@ -21,7 +21,7 @@
                 <th scope="col" th:text="#{producto.id.label}"/>
                 <th scope="col" th:text="#{producto.nombre.label}"/>
                 <th scope="col" th:text="#{producto.descripcion.label}"/>
-                <th scope="col" th:text="#{producto.descripcion.label}"/>
+                <th scope="col" th:text="#{producto.estado.label}"/>
                 <th scope="col" th:text="#{producto.precio.label}"/>
                 <th scope="col" th:text="#{producto.fotoUrl.label}"/>
                 <th><!-- --></th>
@@ -33,7 +33,7 @@
                 <td th:text="${producto.nombre}"/>
                 <td th:text="${producto.descripcion}"/>
                 <td th:text="${producto.estado}"/>
-                <td th:text="${producto.precio}"/>
+                <td th:text="${'S/. '+producto.precio}"/>
                 <td th:text="${producto.fotoUrl}"/>
                 <td>
                     <div class="float-end text-nowrap">
