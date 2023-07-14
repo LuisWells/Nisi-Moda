@@ -1,7 +1,13 @@
-package edu.utp.nisiadmin.model;
+package edu.utp.nisiadmin.dto.cliente;
+
+import edu.utp.nisiadmin.enums.Estado;
+import edu.utp.nisiadmin.model.Cliente;
+
+import java.io.Serializable;
 
 /**
- * DTO for {@link edu.utp.nisiadmin.model.Cliente}
+ * DTO for {@link Cliente}
  */
-public record ListaClienteDto() {
+public record ListaClienteDto(Long id, String nombre, String apellido, String email,
+                              Estado estado) implements Serializable {
 }

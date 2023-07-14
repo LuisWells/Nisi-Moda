@@ -12,8 +12,9 @@ import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @Configuration
+//@EnableJpaRepositories
 @EnableJpaAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
-public class ModelConfig {
+public class AppConfig {
     @Bean(name = "auditingDateTimeProvider")
     public DateTimeProvider dateTimeProvider() {
         return () -> Optional.of(OffsetDateTime.now());

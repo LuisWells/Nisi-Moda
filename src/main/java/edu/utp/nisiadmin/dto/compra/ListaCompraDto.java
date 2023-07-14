@@ -1,4 +1,6 @@
-package edu.utp.nisiadmin.model;
+package edu.utp.nisiadmin.dto.compra;
+
+import edu.utp.nisiadmin.model.Compra;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;

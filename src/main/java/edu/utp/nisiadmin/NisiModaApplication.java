@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class NisiModaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(NisiModaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(NisiModaApplication.class, args);
+    }
 
 }

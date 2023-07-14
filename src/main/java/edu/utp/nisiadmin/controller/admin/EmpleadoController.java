@@ -1,4 +1,4 @@
-package edu.utp.nisiadmin.controller;
+package edu.utp.nisiadmin.controller.admin;
 
 import edu.utp.nisiadmin.dto.empleado.RegistroEmpleadoDto;
 import edu.utp.nisiadmin.enums.Estado;

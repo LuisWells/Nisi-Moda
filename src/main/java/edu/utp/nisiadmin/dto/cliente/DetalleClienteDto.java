@@ -1,7 +1,14 @@
-package edu.utp.nisiadmin.model;
+package edu.utp.nisiadmin.dto.cliente;
+
+import edu.utp.nisiadmin.enums.Estado;
+import edu.utp.nisiadmin.model.Cliente;
+
+import java.io.Serializable;
+import java.time.OffsetDateTime;
 
 /**
- * DTO for {@link edu.utp.nisiadmin.model.Cliente}
+ * DTO for {@link Cliente}
  */
-public record DetalleClienteDto() {
+public record DetalleClienteDto(Long id, String nombre, String apellido, String email, String username, Estado estado,
+                                OffsetDateTime dateCreated, OffsetDateTime lastUpdated) implements Serializable {
 }

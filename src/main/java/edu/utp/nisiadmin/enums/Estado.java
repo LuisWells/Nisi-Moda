@@ -1,2 +1,5 @@
-package edu.utp.nisiadmin.enums;public enum Estado {
+package edu.utp.nisiadmin.enums;
+
+public enum Estado {
+    ACTIVO, INACTIVO
 }

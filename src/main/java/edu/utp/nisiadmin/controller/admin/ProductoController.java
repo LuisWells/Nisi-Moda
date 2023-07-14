@@ -1,8 +1,7 @@
-package edu.utp.nisiadmin.controller;
+package edu.utp.nisiadmin.controller.admin;
 
 import edu.utp.nisiadmin.dto.producto.RegistroProductoDto;
 import edu.utp.nisiadmin.enums.Estado;
-import edu.utp.nisiadmin.service.ProductoService;
 import edu.utp.nisiadmin.service.ProductoService;
 import edu.utp.nisiadmin.util.WebUtils;
 import lombok.RequiredArgsConstructor;

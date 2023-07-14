@@ -1,20 +1,20 @@
-package edu.utp.nisiadmin.model;
+package edu.utp.nisiadmin.dto.compra;
 
-import org.mapstruct.*;
+import edu.utp.nisiadmin.dto.itemcompra.ItemCompraMapper;
+import edu.utp.nisiadmin.model.Compra;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        componentModel = MappingConstants.ComponentModel.SPRING,
+        uses = {ItemCompraMapper.class})
 public interface CompraMapper {
-    Compra toEntity(ListaCompraDto listaCompraDto);
 
-    ListaCompraDto toDto(Compra compra);
+    ListaCompraDto toLista(Compra compra);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Compra partialUpdate(ListaCompraDto listaCompraDto, @MappingTarget Compra compra);
+    DetalleCompraDto toDetalle(Compra compra);
 
-    Compra toEntity(DetalleCompraDto detalleCompraDto);
+    Compra toEntity(RegistroCompraDto registroCompraDto);
 
-    DetalleCompraDto toDto1(Compra compra);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Compra partialUpdate(DetalleCompraDto detalleCompraDto, @MappingTarget Compra compra);
 }

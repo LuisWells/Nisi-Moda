@@ -1,10 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Lista de empleados</title>
+    <title th:text="#{cliente.list.headline}"/>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" rel="stylesheet">
 </head>
 <body>
-
+<div layout:fragment="content">
+    <div class="d-flex flex-wrap mb-4">
+        <h1 class="flex-grow-1" th:text="#{cliente.list.headline}"/>
+        <div>
+            <a class="btn btn-primary ms-2" th:href="@{/clientes/nuevo}" th:text="#{cliente.list.createNew}"/>
+        </div>
+    </div>
+    <div th:if="${clientes.empty}" th:text="#{cliente.list.empty}"/>
+    <div class="table-responsive" th:if="${!clientes.empty}">
+        <table class="table table-striped table-hover align-middle">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{cliente.id.label}"/>
+                <th scope="col" th:text="#{cliente.nombre.label}"/>
+                <th scope="col" th:text="#{cliente.apellido.label}"/>
+                <th scope="col" th:text="#{cliente.email.label}"/>
+                <th scope="col" th:text="#{cliente.estado.label}"/>
+                <th><!-- --></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cliente : ${clientes}">
+                <td th:text="${cliente.id}"/>
+                <td th:text="${cliente.nombre}"/>
+                <td th:text="${cliente.apellido}"/>
+                <td th:text="${cliente.email}"/>
+                <td th:text="${cliente.estado}"/>
+                <td>
+                    <div class="float-end text-nowrap">
+                        <a class="btn btn-sm btn-info" th:href="@{/clientes/editar/{id}(id=${cliente.id})}"
+                           th:text="#{cliente.list.edit}"/>
+                        <form class="js-submit-confirm d-inline"
+                              method="post" th:action="@{/clientes/eliminar/{id}(id=${cliente.id})}"
+                              th:data-confirm-message="#{delete.confirm}">
+                            <button class="btn btn-sm btn-danger" th:text="#{cliente.list.delete}" type="submit"/>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>
