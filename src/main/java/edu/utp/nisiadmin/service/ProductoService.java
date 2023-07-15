@@ -8,8 +8,11 @@ import edu.utp.nisiadmin.enums.EstadoProducto;
 import edu.utp.nisiadmin.model.Producto;
 import edu.utp.nisiadmin.repository.ProductoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +27,10 @@ public class ProductoService {
         return posibleProducto.map(mapper::toDetalle).orElse(null);
     }
 
-    public List<ListaProductoDto> obtenerTodosLosProductos() {
-        List<Producto> listado = repositorio.findAll();
-        return listado.stream().map(mapper::toLista).toList();
+    public Page<ListaProductoDto> obtenerTodosLosProductos(int currentPage, int pageSize) {
+        //currentPage acá es con índice 0 (inicia en cero)... el controlador es responsable de restarle uno
+        Page<Producto> listado = repositorio.findAll(PageRequest.of(currentPage, pageSize));
+        return listado.map(mapper::toLista);
     }
 
     public Long crearProducto(RegistroProductoDto dto) {
@@ -60,5 +64,17 @@ public class ProductoService {
             return true;
         }
         return false;
+    }
+
+    public List<ListaProductoDto> obtenerProductosRelacionados(Long id) {
+        Optional<Producto> posibleProducto = repositorio.findById(id);
+        if (posibleProducto.isPresent()) {
+            String cat = posibleProducto.get().getCategoria();
+            //buscar como recomendación los 3 primeros productos de la misma categoría y que no estén agotados
+            Page<Producto> relacionados = repositorio.findByCategoriaContainsAndEstadoNot(cat, EstadoProducto.AGOTADO, PageRequest.of(0, 3));
+            return relacionados.map(mapper::toLista).toList();
+        } else {
+            return Collections.emptyList();
+        }
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/empleados")
+@RequestMapping("/admin/empleados")
 public class EmpleadoController {
     private final EmpleadoService servicio;
     @ModelAttribute

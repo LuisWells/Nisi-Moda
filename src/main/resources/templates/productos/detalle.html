@@ -1,11 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Detalle Producto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Shop Item - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/static/assets/favicon.ico}"/>
+    <!-- Bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/lux/bootstrap.min.css"
+          rel="stylesheet">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/static/css/styles.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" th:href="@{/}" th:text="#{app.title}"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a th:text="#{navigation.home}" class="nav-link active" aria-current="page"
+                                        href="#!"></a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">Nosotros</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">Comprar</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Todos los productos</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Ofertas</a></li>
+                        <li><a class="dropdown-item" href="#">Nuevos</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <button class="btn btn-outline-dark" type="submit">
+                    <i class="bi-cart-fill me-1"></i>
+                    Carrito
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!-- Product section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="${producto.fotoUrl}" alt="..."/></div>
+            <div class="col-md-6">
+                <div class="small mb-1" th:text="${producto.categoria()}"></div>
+                <h1 class="display-5 fw-bolder" th:text="${producto.nombre}"></h1>
+                <div class="fs-5 mb-5">
+                    <span th:text="${producto.estado.name == 'OFERTA' ? 'Antes: S/.'+ #numbers.formatDecimal(producto.precio*1.1, 0, 2) : ''}"
+                          class="text-decoration-line-through text-body-secondary"></span>
+                    <span th:text="${'S/. ' + producto.precio}"></span>
+                    <span th:text="${producto.estado.name == 'AGOTADO' ? 'Lo sentimos, no hay stock en este momento':''}"
+                          class="text-danger"></span>
+                </div>
+                <p class="lead" th:text="${producto.descripcion}"></p>
+                <div class="d-flex">
+                    <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1"
+                           style="max-width: 6rem"/>
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button"
+                            th:disabled="${producto.estado.name=='AGOTADO'}">
+                        <i class="bi-cart-fill me-1"></i>
+                        AGREGAR AL CARRITO
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Related items section-->
+<section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="fw-bolder mb-4">Productos Relacionados</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div th:each="relacionado: ${relacionados}" class="col mb-5">
+                <div class="card h-100">
+                    <!--                    Estado del producto-->
+                    <div th:if="${relacionado.estado.name != 'STOCK'}"
+                         th:classappend="${relacionado.estado.name=='NUEVO' ? 'bg-primary' : (relacionado.estado.name=='OFERTA' ? 'bg-success': 'bg-danger')}"
+                         th:text="${relacionado.estado}" class="badge text-white position-absolute"
+                         style="top: 0.5rem; right: 0.5rem">
 
+                    </div>
+                    <!-- Imagen de producto-->
+                    <a th:href="${'/productos/'+ relacionado.id}">
+                        <img class="card-img-top" th:src="${relacionado.fotoUrl}" alt="..."/>
+                    </a>
+                    <!-- Detalles de producto-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder" th:text="${relacionado.nombre}"></h5>
+                            <!-- Product price-->
+                            <!--                            $40.00 - $80.00-->
+                            <span th:text="${'S/. '+relacionado.precio}"></span>
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#"
+                                                    th:classappend="${relacionado.estado.name=='AGOTADO'? 'disabled':''}"><i
+                                class="bi bi-cart"></i> Agregar</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-primary">
+    <div class="container"><p class="m-0 text-center text-white">Derechos reservados &copy; Chicos Utepinos 2023</p>
+    </div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
 </body>
 </html>

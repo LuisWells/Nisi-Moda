@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/compras")
+@RequestMapping("/admin/compras")
 public class CompraController {
     private final CompraService servicio;
 

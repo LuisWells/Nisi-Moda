@@ -4,23 +4,23 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
+    <meta name="description" content="Nisi: Compra de todo, al precio más bajo."/>
+    <meta name="author" content="Chicos Utepinos"/>
     <title th:text="#{app.title}"/>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" th:href="@{/static/assets/favicon.ico}"/>
     <!-- Bootstrap icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/lux/bootstrap.min.css"
+          rel="stylesheet">
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet"/>
+    <link th:href="@{/static/css/styles.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!" th:text="#{app.title}"></a>
+        <a class="navbar-brand" th:href="@{/}" th:text="#{app.title}"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
@@ -37,8 +37,8 @@
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
-                        <li><a class="dropdown-item" href="#!">Ofertas</a></li>
-                        <li><a class="dropdown-item" href="#!">Nuevos</a></li>
+                        <li><a class="dropdown-item" href="#">Ofertas</a></li>
+                        <li><a class="dropdown-item" href="#">Nuevos</a></li>
                     </ul>
                 </li>
             </ul>
@@ -53,56 +53,76 @@
     </div>
 </nav>
 <!-- Header-->
-<header class="bg-dark py-5">
+<header class="bg-warning py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder" th:text="#{home.index.headline}"></h1>
-            <p class="lead fw-normal text-white-50 mb-0">Bueno, bonito, barato, ¡y hecho por desarrolladores guapos!</p>
+            <p class="lead fw-normal text-white-25 mb-0">Bueno, bonito, barato, ¡y hecho por desarrolladores guapos!</p>
         </div>
     </div>
 </header>
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-            <div th:each="producto: ${productos}" class="col mb-5">
+            <div th:each="producto: ${productos.content}" class="col mb-5">
                 <div class="card h-100">
                     <!--                    Estado del producto-->
                     <div th:if="${producto.estado.name != 'STOCK'}"
-                         th:classappend="${producto.estado.name=='NUEVO' ? 'bg-secondary' : (producto.estado.name=='OFERTA' ? 'bg-success': 'bg-danger')}"
+                         th:classappend="${producto.estado.name=='NUEVO' ? 'bg-primary' : (producto.estado.name=='OFERTA' ? 'bg-success': 'bg-danger')}"
                          th:text="${producto.estado()}" class="badge text-white position-absolute"
-                         style="top: 0.5rem; right: 0.5rem"></div>
+                         style="top: 0.5rem; right: 0.5rem">
+
+                    </div>
                     <!-- Imagen de producto-->
-                    <img class="card-img-top" th:src="${producto.fotoUrl}" alt="..."/>
+                    <a th:href="${'/productos/'+ producto.id}">
+                        <img class="card-img-top" th:src="${producto.fotoUrl}" alt="..."/>
+                    </a>
                     <!-- Detalles de producto-->
                     <div class="card-body p-4">
                         <div class="text-center">
                             <!-- Product name-->
-                            <h5 class="fw-bolder" th:text="${producto.nombre}">Fancy Product</h5>
+                            <h5 class="fw-bolder" th:text="${producto.nombre}"></h5>
                             <!-- Product price-->
-                            <!--                            $40.00 - $80.00-->
+                            <span th:text="${producto.estado.name == 'OFERTA' ? 'Antes: S/.'+ #numbers.formatDecimal(producto.precio*1.1, 0, 2) : ''}"
+                                  class="text-decoration-line-through text-body-secondary"></span>
+                            <br>
                             <span th:text="${'S/. '+producto.precio}"></span>
                         </div>
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#"><i
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#"
+                                                    th:classappend="${producto.estado.name=='AGOTADO'? 'disabled':''}"><i
                                 class="bi bi-cart"></i> Agregar</a></div>
                     </div>
                 </div>
             </div>
+
+        </div>
+        <div class="row">
+            <nav aria-label="Lista de páginas">
+                <ul class="pagination justify-content-center" th:if="${productos.totalPages > 0}">
+                    <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                        <a class="page-link" th:href="@{/(size=${productos.size}, page=${pageNumber})}"
+                           th:text="${pageNumber}"
+                           th:classappend="${pageNumber==productos.number + 1} ? active"></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
+
 </section>
 <!-- Footer-->
-<footer class="py-5 bg-dark">
+<footer class="py-5 bg-primary">
     <div class="container"><p class="m-0 text-center text-white">Derechos reservados &copy; Chicos Utepinos 2023</p>
     </div>
 </footer>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+<!--<script th:src="@{/static/js/scripts.js}"></script>-->
 </body>
 </html>
