@@ -42,11 +42,11 @@
                 </li>
             </ul>
             <form class="d-flex">
-                <button class="btn btn-outline-dark" type="submit">
+                <a class="btn btn-outline-primary" type="submit" th:href="${'/carrito'}">
                     <i class="bi-cart-fill me-1"></i>
                     Carrito
-                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="indicador-carrito">0</span>
-                </button>
+                    <span class="badge bg-primary text-white ms-1 rounded-pill" id="indicador-carrito">0</span>
+                </a>
             </form>
         </div>
     </div>
@@ -113,8 +113,8 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a href="#" th:data-pid="${producto.id}"
-                                                    th:data-pprecio="${producto.precio}"
+                        <div class="text-center"><a href="#" th:data-pid="${relacionado.id}"
+                                                    th:data-pprecio="${relacionado.precio}"
                                                     class="btn btn-outline-primary mt-auto"
                                                     th:onclick="agregarListaItemACarrito(this.getAttribute('data-pid'), this.getAttribute('data-pprecio'))"
                                                     th:classappend="${relacionado.estado.name=='AGOTADO'? 'disabled':''}"><i

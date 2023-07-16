@@ -12,6 +12,18 @@ window.onload = function cargarCarritoOnLoad() {
         itemsEnCarrito = listaExistente.length;
         const labelCarrito = document.getElementById("indicador-carrito");
         labelCarrito.innerText = itemsEnCarrito;
+        let precioTotal = 0;
+
+        for (const item of listaExistente) {
+            precioTotal = precioTotal + item['precio'];
+            console.log(item)
+        }
+        console.log("Precio total:")
+        console.log(precioTotal)
+        const labelCostoTotal = document.getElementById("monto-costo-total");
+        if (labelCostoTotal !== null) {
+            labelCostoTotal.innerText = "Total: S/. " + String(precioTotal.toFixed(2));
+        }
     }
 }
 
@@ -37,7 +49,9 @@ function agregarListaItemACarrito(productoId, productoPrecio) {
     //TODO: agregar propiedad domain a la cookie
     Cookies.set("carritoNiSi", JSON.stringify(nuevaListaItems));
     const labelCarrito = document.getElementById("indicador-carrito");
-    labelCarrito.innerText = itemsEnCarrito;
+    if (labelCarrito !== null) {
+        labelCarrito.innerText = itemsEnCarrito;
+    }
 }
 
 function agregarDetalleItemACarrito(productoId, productoPrecio) {
@@ -65,4 +79,27 @@ function agregarDetalleItemACarrito(productoId, productoPrecio) {
     Cookies.set("carritoNiSi", JSON.stringify(nuevaListaItems));
     const labelCarrito = document.getElementById("indicador-carrito");
     labelCarrito.innerText = itemsEnCarrito;
+}
+
+function cargarCarrito() {
+    let carrito = Cookies.get("carritoNiSi");
+    if (carrito !== undefined) {
+        // const itemsListContainer = document.getElementById("contenedor-lista-items");
+        // itemsListContainer.innerHTML='';
+        const carritoArray = JSON.parse(carrito)
+        carritoArray.forEach(item => {
+            console.log("new item!");
+            console.log(item);
+        })
+    }
+}
+
+function generarCompra() {
+
+}
+
+function eliminarCarrito() {
+    Cookies.remove("carritoNiSi");
+    console.log("Carrito borrado!");
+    window.location.reload();
 }

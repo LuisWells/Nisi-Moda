@@ -6,4 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/funciones")
 public class RestController {
     //TODO: manage cart using cookies and buys using DB.
+//    @PostMapping
+//    public List<ListaProductoDto> obtenerListaProductosPorListaId() {
+//
+//    }
 }
