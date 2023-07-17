@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 @Controller
@@ -22,15 +21,13 @@ public class WebSiteController {
     private final ProductoService productoService;
 
     @GetMapping
-    public String index(Model model, @RequestParam("page") Optional<Integer> page,
-                        @RequestParam("size") Optional<Integer> size) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(10);
-        if (currentPage < 1) {
-            currentPage = 1;
+    public String index(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page,
+                        @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        if (page < 1) {
+            page = 1;
         }
         //Acá las páginas vienen en lenguaje natural... inician en 1, por eso hay que restarle uno, ya que el servicio usa arrays que inician en cero.
-        var listaProductos = productoService.obtenerTodosLosProductos(currentPage - 1, pageSize);
+        var listaProductos = productoService.obtenerTodosLosProductos(page - 1, size);
         model.addAttribute("productos", listaProductos);
 
         //agregamos al modelo una lista con los números de página, para el paginado
@@ -56,7 +53,7 @@ public class WebSiteController {
     public String detalleCarrito(Model model, @CookieValue(name = "carritoNiSi", defaultValue = "noCookie") String carritoCookie) throws JsonProcessingException {
         List<String> listaNombresDeProductos = new ArrayList<>();
         List<String> listaFotosDeProducto = new ArrayList<>();
-        model.addAttribute("sinCarritoFlag", carritoCookie.equals("noCookie"));
+        model.addAttribute("sinCarritoFlag", carritoCookie.equals("noCookie") || carritoCookie.equals("[]"));
 
         if (!carritoCookie.equals("noCookie")) {
             ObjectMapper mapper = new ObjectMapper();
