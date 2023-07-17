@@ -94,12 +94,13 @@
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center"><a th:data-pid="${producto.id}"
+                                                    th:id="${'agregar-carrito-producto-'+producto.id}"
                                                     th:data-pprecio="${producto.precio}"
                                                     class="btn btn-outline-primary mt-auto"
                                                     th:onclick="agregarListaItemACarrito(this.getAttribute('data-pid'), this.getAttribute('data-pprecio'))"
                                                     href="#"
                                                     th:classappend="${producto.estado.name=='AGOTADO'? 'disabled':''}">
-                            <i class="bi bi-cart"></i> Agregar</a>
+                            <i class="bi bi-cart-plus"></i> Agregar</a>
                         </div>
                     </div>
                 </div>
@@ -122,7 +123,7 @@
 </section>
 <!-- Footer-->
 <footer class="py-5 bg-primary">
-    <div class="container"><p class="m-0 text-center text-white">Derechos reservados &copy; Chicos Utepinos 2023</p>
+    <div class="container"><p class="m-0 text-center text-white">Derechos reservados &copy; Chicos Utepínos 2023</p>
     </div>
 </footer>
 <!-- Bootstrap core JS-->
