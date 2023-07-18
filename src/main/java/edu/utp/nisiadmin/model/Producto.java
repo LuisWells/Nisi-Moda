@@ -52,6 +52,16 @@ public class Producto {
     @ToString.Include
     private Double precio;
 
+    private Long ventas;
+    private Long visualizaciones;
+    private Long vecesEnCarrito;
+
+    /*
+        Entrenas con estado, precio, ventas, visualizaciones, vecesEnCarrito, Categoría, nombre.
+        Request: (precio, categoría)->([precio1,precio2])
+        Para que esto funciones: cada vez que se crea un nuevo producto, se manda un request a Flask para que reentrene a la NN.
+     */
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;

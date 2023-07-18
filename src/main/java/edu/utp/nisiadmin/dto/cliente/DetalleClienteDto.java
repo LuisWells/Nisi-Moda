@@ -9,6 +9,6 @@ import java.time.OffsetDateTime;
 /**
  * DTO for {@link Cliente}
  */
-public record DetalleClienteDto(Long id, String nombre, String apellido, String email, String username, Estado estado,
+public record DetalleClienteDto(Long id, String nombre, String apellido, String email, String dni, Estado estado,
                                 OffsetDateTime dateCreated, OffsetDateTime lastUpdated) implements Serializable {
 }

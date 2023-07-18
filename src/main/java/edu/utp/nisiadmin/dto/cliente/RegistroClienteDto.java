@@ -11,6 +11,5 @@ import java.io.Serializable;
  * DTO for {@link Cliente}
  */
 public record RegistroClienteDto(@NotBlank String nombre, @NotBlank String apellido, @Email @NotBlank String email,
-                                 @NotBlank @Length(min = 4, max = 32) String username,
-                                 @NotBlank @Length(min = 4, max = 32) String password) implements Serializable {
+                                 @NotBlank @Length(min = 8, max = 32) String dni) implements Serializable {
 }

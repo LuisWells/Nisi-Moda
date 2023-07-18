@@ -181,33 +181,33 @@
                     o correo con captura del voucher y el código de pago.</p>
                 <form class="row g-2">
                     <div class="col-md-6">
-                        <label class="form-label" for="inputEmail4">Nombres</label>
-                        <input class="form-control" id="inputEmail4" type="email">
+                        <label class="form-label" for="input-pagar-nombre">Nombres</label>
+                        <input class="form-control" id="input-pagar-nombre" type="text">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label" for="inputPassword4">Apellidos</label>
-                        <input class="form-control" id="inputPassword4" type="password">
+                        <label class="form-label" for="input-pagar-apellido">Apellidos</label>
+                        <input class="form-control" id="input-pagar-apellido" type="text">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="input-pagar-dni">DNI/CE</label>
+                        <input class="form-control" id="input-pagar-dni" type="number">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="input-pagar-email">Email</label>
+                        <input class="form-control" id="input-pagar-email" type="email">
                     </div>
                     <div class="col-12">
-                        <label class="form-label" for="inputAddress">Dirección</label>
-                        <input class="form-control" id="inputAddress" placeholder="Ingresa tu dirección de delivery"
-                               type="text">
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label" for="inputAddress2">Indicaciones</label>
-                        <input class="form-control" id="inputAddress2" placeholder="Entradas, horarios, referencias, etc."
+                        <label class="form-label" for="input-pagar-direccion">Dirección</label>
+                        <input class="form-control" id="input-pagar-direccion"
+                               placeholder="Ingresa tu dirección de delivery"
                                type="text">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label" for="inputCity">Distrito</label>
-                        <input class="form-control" id="inputCity" type="text">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="inputState">Región</label>
-                        <select class="form-select" id="inputState">
+                        <label class="form-label" for="input-pagar-region">Región</label>
+                        <select class="form-select" id="input-pagar-region">
                             <option selected>Escoger...</option>
-                            <option>Lima</option>
-                            <option>Callao</option>
+                            <option value="Lima">Lima</option>
+                            <option value="Callao">Callao</option>
                         </select>
                     </div>
                     <div class="col-12">
@@ -216,10 +216,12 @@
                             <label class="form-check-label" for="gridCheck">
                                 Recibir correos con ofertas
                             </label>
+                            <!--                            TODO: Implementar recibir correos-->
                         </div>
                     </div>
                 </form>
-                <a aria-controls="collapseExample" aria-expanded="false" class="btn btn-primary mt-5" data-bs-toggle="collapse"
+                <a aria-controls="collapseExample" aria-expanded="false" class="btn btn-primary mt-5"
+                   data-bs-toggle="collapse"
                    href="#medios-de-pago" role="button">
                     Mostrar medios de pago
                 </a>
@@ -244,7 +246,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancelar</button>
-                <button class="btn btn-primary" type="button">Pagar</button>
+                <button class="btn btn-primary" onclick="generarCompra()" type="button">Pagar</button>
             </div>
         </div>
     </div>
