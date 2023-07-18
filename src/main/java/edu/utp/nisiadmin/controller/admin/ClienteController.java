@@ -43,7 +43,7 @@ public class ClienteController {
         if (!bindingResult.hasFieldErrors("email") && servicio.emailYaExiste(dto.email())) {
             bindingResult.rejectValue("email", "Exists.cliente.email");
         }
-        if (!bindingResult.hasFieldErrors("username") && servicio.usernameYaExiste(dto.username())) {
+        if (!bindingResult.hasFieldErrors("username") && servicio.dniYaExiste(dto.dni())) {
             bindingResult.rejectValue("username", "Exists.cliente.username");
         }
         if (bindingResult.hasErrors()) {

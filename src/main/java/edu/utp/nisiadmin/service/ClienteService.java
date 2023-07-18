@@ -28,6 +28,11 @@ public class ClienteService {
         return posibleCliente.map(mapper::toDetalle).orElse(null);
     }
 
+    public DetalleClienteDto obtenerClientePorEmailYDni(String email, String dni) {
+        Optional<Cliente> posibleCliente = repositorio.findByEmailIgnoreCaseAndDni(email, dni);
+        return posibleCliente.map(mapper::toDetalle).orElse(null);
+    }
+
     public List<ListaClienteDto> obtenerTodosLosClientes() {
         List<Cliente> listado = repositorio.findAll();
         return listado.stream().map(mapper::toLista).collect(Collectors.toList());
@@ -36,7 +41,6 @@ public class ClienteService {
     public Long crearCliente(RegistroClienteDto dto) {
         try {
             Cliente cliente = mapper.toEntity(dto);
-            cliente.setPassword(encoder.encode(dto.password()));
             cliente.setEstado(Estado.ACTIVO);
             Cliente clienteGuardado = repositorio.save(cliente);
             return clienteGuardado.getId();
@@ -69,11 +73,16 @@ public class ClienteService {
         return false;
     }
 
+    public boolean clienteYaExiste(RegistroClienteDto clienteDto) {
+        return repositorio.existsByEmailIgnoreCaseAndDni(clienteDto.email(), clienteDto.dni());
+    }
+
     public boolean emailYaExiste(String email) {
+        return false; //TODO: Implementar esto
+    }
+
+    public boolean dniYaExiste(String username) {
         return false;
     }
 
-    public boolean usernameYaExiste(String username) {
-        return false;
-    }
 }

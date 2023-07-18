@@ -44,10 +44,7 @@ public class Cliente {
 
     @ToString.Include
     @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
+    private String dni;
 
     @ToString.Include
     @Enumerated(EnumType.STRING)

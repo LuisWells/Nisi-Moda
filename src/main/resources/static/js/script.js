@@ -110,6 +110,42 @@ function cargarCarrito() {
 }
 
 function generarCompra() {
+    const inputNombre = document.getElementById("input-pagar-nombre");
+    const inputApellido = document.getElementById("input-pagar-apellido");
+    const inputDni = document.getElementById("input-pagar-dni");
+    const inputEmail = document.getElementById("input-pagar-email");
+//TODO: implementar dirección de entrega en compra
+
+    const clientData = {
+        "nombre": inputNombre.value,
+        "apellido": inputApellido.value,
+        "email": inputEmail.value,
+        "dni": inputDni.value,
+    };
+    fetch("/funciones/comprar", {
+        method: "POST",
+        body: JSON.stringify(clientData),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+            if (response.status === 200) {
+                console.log("response:")
+                console.log(response);
+                response.json().then(data => {
+                        console.log("Data:");
+                        console.log(data)
+                        if (data === true) {
+                            console.log("compra generada");
+                        } else {
+                            console.log("compra NO generada");
+                        }
+                    }
+                )
+            }
+        }
+    )
 
 }
 
